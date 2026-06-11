@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensagens | Admin</title>
+     <link rel="stylesheet" th:href="@{/css/painelp.css}">
+    <link rel="stylesheet" th:href="@{/css/contato-admin.css}">
+</head>
+<body>
+<div class="painel-card">
+
+    <div class="painel-titulo">
+        <h2>Caixa de Mensagens</h2>
+        <span class="badge-nao-lidas" th:if="${naoLidas > 0}"
+              th:text="${naoLidas} + ' nao lida(s)'"></span>
+    </div>
+
+    <p class="painel-subtitle">Logado como <strong sec:authentication="name"></strong></p>
+
+    <div th:if="${sucesso}" class="alerta-sucesso" th:text="${sucesso}"></div>
+
+    <div th:if="${#lists.isEmpty(contatos)}" class="empty-msg">
+        Nenhuma mensagem recebida ainda.
+    </div>
+
+    <table th:unless="${#lists.isEmpty(contatos)}" class="eventos-table">
+        <thead>
+            <tr>
+                <th>Status</th>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>Assunto</th>
+                <th>Recebido em</th>
+                <th>Acao</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="c : ${contatos}"
+                th:classappend="${!c.lida} ? 'row-nova' : ''">
+                <td>
+                    <span class="badge-status respondida" th:if="${c.respondida}">Respondida</span>
+                    <span class="badge-status lida"       th:if="${c.lida and !c.respondida}">Lida</span>
+                    <span class="badge-status nova"       th:unless="${c.lida}">Nova</span>
+                </td>
+                <td th:text="${c.nome}"></td>
+                <td th:text="${c.email}"></td>
+                <td th:text="${c.assunto}"></td>
+                <td th:text="${#temporals.format(c.dataEnvio, 'dd/MM/yyyy HH:mm')}"></td>
+                <td>
+                    <a th:href="@{/operador/contatos/{id}(id=${c.id})}" class="btn-alterar">
+                        Ver
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Paginacao -->
+    <div class="paginacao" th:if="${totalPages > 1}">
+        <a th:each="i : ${#numbers.sequence(0, totalPages-1)}"
+           th:href="@{/operador/contatos(page=${i})}"
+           th:text="${i+1}"
+           th:classappend="${i==currentPage}?'active'"
+           class="btn-page">
+        </a>
+    </div>
+
+    <div class="painel-footer">
+        <a th:href="@{/home}">&#8592; Voltar ao Inicio</a>
+    </div>
+
+</div>
+</body>
+</html>

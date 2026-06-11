@@ -1,0 +1,373 @@
+
+/* ================================= */
+/* LOGIN PAGE                        */
+/* ================================= */
+
+.login-page{
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-top: 150px;
+    padding-bottom: 80px;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* ================================= */
+/* CARD LOGIN                        */
+/* ================================= */
+
+.login-card{
+
+    width: 100%;
+    max-width: 520px;
+
+    background-image:
+    linear-gradient(
+        -45deg,
+        rgba(233,216,166,.20),
+        rgba(231,162,199,.20),
+        rgba(140,111,179,.20),
+        rgba(127,159,193,.20),
+        rgba(127,174,196,.20)
+    );
+
+    background-size: 300% 300%;
+
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
+    background-color: rgba(255,255,255,.30);
+
+    border-top: 2px solid rgba(255,255,255,.5);
+
+    border-radius: 20px;
+
+    box-shadow:
+    0 15px 30px rgba(91,40,158,.25);
+
+    padding: 4rem;
+
+    animation:
+    has-shown 1s ease forwards,
+    gradient 12s ease infinite;
+}
+
+/* ================================= */
+/* HEADER                            */
+/* ================================= */
+
+.card-header{
+    text-align:center;
+    margin-bottom:3rem;
+}
+
+.card-header h2{
+    color:var(--cor-texto-forte);
+    text-shadow:var(--brilho-protetor);
+
+    margin-bottom:1rem;
+
+    font-size:3.2rem;
+}
+
+.card-header p{
+    font-size:1.6rem;
+    color:var(--cor-texto);
+}
+
+/* ================================= */
+/* ALERTAS                           */
+/* ================================= */
+
+.alerta{
+    padding:1.4rem;
+    border-radius:12px;
+    margin-bottom:2rem;
+
+    font-size:1.4rem;
+    font-weight:500;
+}
+
+.alerta-erro{
+    background:rgba(220,38,38,.12);
+    color:#b91c1c;
+}
+
+.alerta-sucesso{
+    background:rgba(34,197,94,.12);
+    color:#15803d;
+}
+
+/* ================================= */
+/* FORM                             */
+/* ================================= */
+
+.form-group{
+    margin-bottom:2rem;
+}
+
+.form-group label{
+    display:block;
+
+    margin-bottom:.8rem;
+
+    color:var(--cor-texto-forte);
+
+    font-size:1.5rem;
+    font-weight:600;
+}
+
+.form-group input{
+
+    width:100%;
+
+    padding:1.4rem;
+
+    border-radius:12px;
+
+    border:1px solid rgba(255,255,255,.5);
+
+    background:rgba(255,255,255,.35);
+
+    backdrop-filter:blur(5px);
+
+    font-size:1.5rem;
+
+    transition:.3s;
+}
+
+.form-group input::placeholder{
+    color:#666;
+}
+
+.form-group input:focus{
+
+    outline:none;
+
+    border-color:var(--cor-primaria);
+
+    box-shadow:
+    0 0 0 4px rgba(91,40,158,.15);
+}
+
+/* ================================= */
+/* INPUT SENHA                       */
+/* ================================= */
+
+.input-senha-wrapper{
+    position:relative;
+}
+
+.input-senha-wrapper input{
+    padding-right:55px;
+}
+
+.btn-toggle-senha{
+
+    position:absolute;
+
+    right:15px;
+    top:50%;
+
+    transform:translateY(-50%);
+
+    background:none;
+    border:none;
+
+    cursor:pointer;
+
+    color:var(--cor-primaria);
+
+    transition:.3s;
+}
+
+.btn-toggle-senha:hover{
+    transform:
+    translateY(-50%)
+    scale(1.1);
+}
+
+/* ================================= */
+/* ERROS                             */
+/* ================================= */
+
+.campo-erro{
+
+    display:block;
+
+    margin-top:.6rem;
+
+    color:#dc2626;
+
+    font-size:1.3rem;
+}
+
+/* ================================= */
+/* BOTÃO LOGIN                       */
+/* ================================= */
+
+.btn-login{
+
+    width:100%;
+
+    margin-top:1rem;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    gap:10px;
+
+    border:none;
+
+    border-radius:50px;
+
+    padding:1.5rem;
+
+    background:var(--cor-primaria);
+
+    color:white;
+
+    font-size:1.6rem;
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s ease;
+}
+
+.btn-login:hover{
+
+    transform:translateY(-3px);
+
+    box-shadow:
+    0 15px 30px rgba(91,40,158,.40);
+}
+
+.btn-icon{
+    transition:.3s;
+}
+
+.btn-login:hover .btn-icon{
+    transform:translateX(4px);
+}
+
+/* ================================= */
+/* FOOTER CARD                       */
+/* ================================= */
+
+.card-footer{
+
+    margin-top:2.5rem;
+
+    display:flex;
+    flex-direction:column;
+
+    gap:1rem;
+
+    text-align:center;
+}
+
+.card-footer a{
+
+    color:var(--cor-primaria);
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.card-footer a:hover{
+    opacity:.8;
+}
+
+/* ================================= */
+/* LOGIN GOOGLE (FUTURO)             */
+/* ================================= */
+
+.divisor{
+
+    display:flex;
+    align-items:center;
+
+    margin:2rem 0;
+}
+
+.divisor::before,
+.divisor::after{
+
+    content:"";
+
+    flex:1;
+
+    height:1px;
+
+    background:rgba(0,0,0,.15);
+}
+
+.divisor span{
+
+    padding:0 15px;
+
+    font-size:1.3rem;
+    color:#666;
+}
+
+.btn-google{
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    gap:10px;
+
+    width:100%;
+
+    padding:1.2rem;
+
+    border-radius:12px;
+
+    background:rgba(255,255,255,.45);
+
+    border:1px solid rgba(255,255,255,.4);
+
+    font-weight:600;
+}
+
+/* ================================= */
+/* RESPONSIVO                        */
+/* ================================= */
+
+@media(max-width:768px){
+
+    .login-page{
+        padding-top:180px;
+    }
+
+    .login-card{
+        padding:3rem 2rem;
+    }
+
+    .card-header h2{
+        font-size:2.8rem;
+    }
+}
+
+@media(max-width:480px){
+
+    .login-card{
+        padding:2.5rem 1.8rem;
+    }
+
+    .card-header h2{
+        font-size:2.4rem;
+    }
+
+    .btn-login{
+        font-size:1.5rem;
+    }
+}

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda de Eventos</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
+    <link rel="stylesheet" th:href="@{/css/calendario.css}">
+</head>
+<body>
+      <!-- ════════════════════════════════════════
+         MENU — ADMINISTRADOR
+    ════════════════════════════════════════ -->
+    <aside class="sidebar" sec:authorize="hasAuthority('ROLE_ADMIN')">
+        <div class="sidebar-header">
+            <h3>⚙ Administrador</h3>
+            <p sec:authentication="name"></p>
+        </div>
+
+        <div class="accordion">
+            <button class="accordion-btn">
+                <span class="btn-left"><span class="icon">🗂</span> Operacao</span>
+                <span class="accordion-arrow">▼</span>
+            </button>
+            <div class="accordion-content">
+                <a th:href="@{/operador/painel}"><span class="icon">📋</span> Painel Operador</a>
+                <a th:href="@{/operador/inscritos}"><span class="icon">👥</span> Inscritos nos Eventos</a>
+                <a th:href="@{/admin/visitantes}"><span class="icon">📊</span> Relatorio de Visitantes</a>
+                <a th:href="@{/operador/contatos}"><span class="icon">✉</span> Mensagens Recebidas</a>
+            </div>
+        </div>
+
+        <div class="accordion">
+            <button class="accordion-btn">
+                <span class="btn-left"><span class="icon">🔧</span> Administracao</span>
+                <span class="accordion-arrow">▼</span>
+            </button>
+            <div class="accordion-content">
+                <a th:href="@{/admin/usuarios}"><span class="icon">👤</span> Cadastrar Usuario</a>
+                <a th:href="@{/admin/listar-usuarios}"><span class="icon">📋</span> Listar Usuarios</a>
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">🚪 Sair do Sistema</button>
+            </form>
+        </div>
+    </aside>
+     
+
+    <div class="container-agenda">
+        <div class="calendar-box">
+            <div class="calendar-header">
+                <button id="btn-prev">&lt;</button>
+                <span id="mes-ano">---</span>
+                <button id="btn-next">&gt;</button>
+            </div>
+
+            <div class="weekdays">
+                <div>D</div><div>S</div><div>T</div><div>Q</div>
+                <div>Q</div><div>S</div><div>S</div>
+            </div>
+
+            <div class="days-grid" id="days-grid"></div>
+        </div>
+
+        <div class="obs-container">
+            <h3>Observacoes</h3>
+            <div id="obs-content">
+                <p style="opacity:0.6">Selecione um dia para ver os detalhes.</p>
+            </div>
+            <br>
+            <a th:href="@{/}" style="color: #67e8f9; text-decoration: none;">&#8592; Voltar para Inicio</a>
+        </div>
+    </div>
+
+    <script th:src="@{/js/calendario.js}"></script>
+
+</body>
+</html>

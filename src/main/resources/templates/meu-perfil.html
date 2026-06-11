@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil | Sistema de Eventos</title>
+    <!-- Importando os estilos que você já possui -->
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/meu-perfil.css}">
+    <style>
+        /* Ajuste preventivo para garantir que o layout não quebre se o CSS demorar a carregar */
+        .tab-pane { display: none; }
+        .tab-pane.active { display: block; }
+        .input-readonly { background-color: rgba(255,255,255,0.02) !important; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+<div class="layout">
+
+    <!-- ════════════════════════ SIDEBAR DINÂMICA (ADMIN / OPERADOR / USER) ════════════════════════ -->
+    
+    <!-- ADMIN -->
+    <aside class="sidebar" sec:authorize="hasAuthority('ROLE_ADMIN')">
+        <div class="sidebar-header">
+            <h3>⚙️ Administrador</h3>
+            <p sec:authentication="name"></p>
+        </div>
+        <a th:href="@{/home}"><span class="icon">🏠</span> Início</a>
+        <a th:href="@{/calendario}"><span class="icon">📅</span> Agenda de Eventos</a>
+        <a th:href="@{/meu-perfil}" class="sidebar-active"><span class="icon">👤</span> Meu Perfil</a>
+        <div class="accordion">
+            <button class="accordion-btn">
+                <span class="btn-left"><span class="icon">📁</span> Operação</span>
+                <span class="accordion-arrow">▼</span>
+            </button>
+            <div class="accordion-content">
+                <a th:href="@{/operador/painel}"><span class="icon">📋</span> Painel Operador</a>
+                <a th:href="@{/operador/inscritos}"><span class="icon">👥</span> Inscritos</a>
+                <a th:href="@{/admin/visitantes}"><span class="icon">📊</span> Visitantes</a>
+            </div>
+        </div>
+        <div class="accordion">
+            <button class="accordion-btn">
+                <span class="btn-left"><span class="icon">🛠️</span> Administração</span>
+                <span class="accordion-arrow">▼</span>
+            </button>
+            <div class="accordion-content">
+                <a th:href="@{/admin/usuarios}"><span class="icon">➕</span> Novo Usuário</a>
+                <a th:href="@{/admin/listar-usuarios}"><span class="icon">📑</span> Listar Usuários</a>
+            </div>
+        </div>
+        <div class="sidebar-footer">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">🚪 Sair do Sistema</button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- OPERADOR (Se não for Admin) -->
+    <aside class="sidebar" sec:authorize="hasAuthority('ROLE_OPERADOR') and !hasAuthority('ROLE_ADMIN')">
+        <div class="sidebar-header">
+            <h3>📁 Operador</h3>
+            <p sec:authentication="name"></p>
+        </div>
+        <a th:href="@{/home}"><span class="icon">🏠</span> Início</a>
+        <a th:href="@{/calendario}"><span class="icon">📅</span> Agenda</a>
+        <a th:href="@{/meu-perfil}" class="sidebar-active"><span class="icon">👤</span> Perfil</a>
+        <div class="accordion">
+            <button class="accordion-btn">
+                <span class="btn-left"><span class="icon">📁</span> Operação</span>
+                <span class="accordion-arrow">▼</span>
+            </button>
+            <div class="accordion-content">
+                <a th:href="@{/operador/painel}"><span class="icon">📋</span> Painel</a>
+                <a th:href="@{/operador/inscritos}"><span class="icon">👥</span> Inscritos</a>
+                <a th:href="@{/admin/visitantes}"><span class="icon">📊</span> Relatórios</a>
+            </div>
+        </div>
+        <div class="sidebar-footer">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">🚪 Sair</button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- USUÁRIO COMUM (ROLE_USER apenas) -->
+    <aside class="sidebar" sec:authorize="hasAuthority('ROLE_USER') and !hasAuthority('ROLE_ADMIN') and !hasAuthority('ROLE_OPERADOR')">
+        <div class="sidebar-header">
+            <h3>👤 Minha Conta</h3>
+            <p sec:authentication="name"></p>
+        </div>
+        <a th:href="@{/home}"><span class="icon">🏠</span> Início</a>
+        <a th:href="@{/calendario}"><span class="icon">📅</span> Eventos</a>
+        <a th:href="@{/meu-perfil}" class="sidebar-active"><span class="icon">👤</span> Meu Perfil</a>
+        <div class="sidebar-footer">
+            <form th:action="@{/logout}" method="post">
+                <button type="submit">🚪 Sair</button>
+            </form>
+        </div>
+    </aside>
+
+    <!-- ════════════════════════ CONTEÚDO PRINCIPAL ════════════════════════ -->
+    <div class="main-content perfil-main">
+
+        <!-- Banner de Perfil -->
+        <div class="perfil-hero">
+            <div class="perfil-avatar-wrap">
+                <img th:src="${perfil.fotoPerfil != null} ? @{'/uploads/fotos/' + ${perfil.fotoPerfil}} : @{/images/avatar-default.png}"
+                     id="fotoPreviewHero" class="perfil-avatar" alt="Foto de perfil"/>
+                <a href="#" class="avatar-cam" title="Alterar foto" onclick="openTab(event,'foto'); return false;">📸</a>
+            </div>
+            <div class="perfil-hero-info">
+                <h2 th:text="${perfil.nome}">Carregando...</h2>
+                <p th:text="${perfil.email}">email@exemplo.com</p>
+                <span class="perfil-role"
+                      th:text="${perfil.tipo == 'ROLE_ADMIN'} ? 'Administrador' :
+                                (${perfil.tipo == 'ROLE_OPERADOR'} ? 'Operador' : 'Usuário Regular')">
+                </span>
+            </div>
+        </div>
+
+        <!-- Mensagens de Feedback -->
+        <div th:if="${sucesso}" class="flash flash-sucesso" th:text="${sucesso}"></div>
+        <div th:if="${erro}"    class="flash flash-erro"    th:text="${erro}"></div>
+
+        <!-- Navegação por Abas -->
+        <div class="perfil-tabs">
+            <button class="tab-btn active" onclick="openTab(event,'dados')">👤 Dados Pessoais</button>
+            <button class="tab-btn" onclick="openTab(event,'senha')">🔐 Segurança</button>
+            <button class="tab-btn" onclick="openTab(event,'enderecos')">📍 Endereços</button>
+            <button class="tab-btn" onclick="openTab(event,'foto')">📷 Foto</button>
+        </div>
+
+        <!-- ══ ABA 1: Dados Pessoais ══ -->
+        <div class="tab-pane active" id="tab-dados">
+            <div class="perfil-card">
+                <div class="perfil-card-title">👤 Informações da Conta</div>
+                <form th:action="@{/meu-perfil/dados}" th:object="${perfil}" method="post">
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" th:field="*{nome}" required placeholder="Seu nome completo">
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail Principal</label>
+                        <input type="email" th:field="*{email}" required>
+                    </div>
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label>CPF <span class="info-tag">Bloqueado</span></label>
+                            <input type="text" th:value="${perfil.cpf}" class="input-readonly" readonly title="O CPF não pode ser alterado por segurança">
+                        </div>
+                        <div class="form-group">
+                            <label>Telefone / WhatsApp</label>
+                            <input type="text" th:field="*{telefone}" id="telefone" placeholder="(00) 00000-0000">
+                        </div>
+                    </div>
+                    <div class="row-2">
+                        <div class="form-group">
+                            <label>Nascimento</label>
+                            <input type="date" th:field="*{dataNascimento}">
+                        </div>
+                        <div class="form-group">
+                            <label>Área de Atuação</label>
+                            <select th:field="*{areaAtuacao}">
+                                <option value="">Selecione...</option>
+                                <option value="Tecnologia">Tecnologia</option>
+                                <option value="Saude">Saúde</option>
+                                <option value="Educacao">Educação</option>
+                                <option value="Direito">Direito</option>
+                                <option value="Engenharia">Engenharia</option>
+                                <option value="Administracao">Administração</option>
+                                <option value="Outra">Outra</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Empresa ou Instituição</label>
+                        <input type="text" th:field="*{empresa}" placeholder="Nome da organização">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-salvar">💾 Atualizar Dados</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ══ ABA 2: Segurança (Senha) ══ -->
+        <div class="tab-pane" id="tab-senha">
+            <div class="perfil-card">
+                <div class="perfil-card-title">🔐 Alterar Senha</div>
+                <form th:action="@{/meu-perfil/senha}" th:object="${senhaDTO}" method="post" id="formSenha">
+                    <div class="form-group">
+                        <label>Senha Atual</label>
+                        <input type="password" th:field="*{senhaAtual}" placeholder="Confirme sua senha atual" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nova Senha</label>
+                        <input type="password" th:field="*{novaSenha}" id="novaSenha" required
+                               placeholder="Crie uma nova senha forte">
+                        <div class="senha-requisitos">
+                            <span id="req-tamanho">✗ Mínimo 8 caracteres</span>
+                            <span id="req-maiuscula">✗ Uma letra maiúscula</span>
+                            <span id="req-numero">✗ Um número</span>
+                            <span id="req-especial">✗ Um caractere especial</span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmar Nova Senha</label>
+                        <input type="password" th:field="*{confirmarSenha}" id="confirmarSenha" required>
+                        <span class="campo-erro" id="confirmar-erro"></span>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-salvar">🛡️ Atualizar Senha</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- ══ ABA 3: Endereços ══ -->
+        <div class="tab-pane" id="tab-enderecos">
+            <div class="perfil-card">
+                <div class="perfil-card-title">📍 Gestão de Endereços</div>
+
+                <!-- Lista de Endereços Existentes -->
+                <div th:if="${not #lists.isEmpty(enderecos)}">
+                    <div class="endereco-item" th:each="end : ${enderecos}">
+                        <div class="endereco-badge" th:text="${end.tipo}">Tipo</div>
+                        <div class="endereco-dados">
+                            <strong th:text="${end.logradouro + ', ' + end.numero}"></strong>
+                            <span th:text="${end.bairro + ' | ' + end.cidade + '-' + end.estado + ' | CEP: ' + end.cep}"></span>
+                        </div>
+                        <form th:action="@{/meu-perfil/endereco/remover}" method="post">
+                            <input type="hidden" name="id" th:value="${end.id}">
+                            <button type="submit" class="btn-remover" title="Remover Endereço">🗑️</button>
+                        </form>
+                    </div>
+                </div>
+                <p class="sem-registros" th:if="${#lists.isEmpty(enderecos)}">
+                    Você ainda não cadastrou nenhum endereço.
+                </p>
+
+                <!-- Formulário de Novo Endereço (Com Busca CEP) -->
+                <div class="novo-bloco">
+                    <div class="novo-bloco-title">➕ Adicionar Novo Endereço</div>
+                    <form th:action="@{/meu-perfil/endereco/salvar}" th:object="${novoEndereco}" method="post">
+                        <div class="form-group">
+                            <label>Tipo de Local</label>
+                            <select th:field="*{tipo}" required>
+                                <option value="Residencial">Residencial</option>
+                                <option value="Comercial">Comercial</option>
+                                <option value="Trabalho">Trabalho</option>
+                                <option value="Outro">Outro</option>
+                            </select>
+                        </div>
+                        <div class="row-2">
+                            <div class="form-group">
+                                <label>CEP (Busca automática)</label>
+                                <input type="text" th:field="*{cep}" id="cep" placeholder="00000-000" maxlength="9">
+                                <span class="campo-erro" id="cep-erro"></span>
+                            </div>
+                            <div class="form-group">
+                                <label>Número</label>
+                                <input type="text" th:field="*{numero}" id="numero" required placeholder="Nº">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Logradouro</label>
+                            <input type="text" th:field="*{logradouro}" id="logradouro" readonly class="input-readonly">
+                        </div>
+                        <div class="row-2">
+                            <div class="form-group">
+                                <label>Bairro</label>
+                                <input type="text" th:field="*{bairro}" id="bairro" readonly class="input-readonly">
+                            </div>
+                            <div class="form-group">
+                                <label>Complemento</label>
+                                <input type="text" th:field="*{complemento}" placeholder="Apto, Bloco, etc.">
+                            </div>
+                        </div>
+                        <div class="row-2">
+                            <div class="form-group">
+                                <label>Cidade</label>
+                                <input type="text" th:field="*{cidade}" id="cidade" readonly class="input-readonly">
+                            </div>
+                            <div class="form-group">
+                                <label>Estado (UF)</label>
+                                <input type="text" th:field="*{estado}" id="estado" readonly class="input-readonly">
+                            </div>
+                        </div>
+                        <div class="form-actions">
+                            <button type="submit" class="btn-salvar">📍 Salvar Endereço</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ ABA 4: Foto de Perfil ══ -->
+        <div class="tab-pane" id="tab-foto">
+            <div class="perfil-card">
+                <div class="perfil-card-title">📷 Imagem de Perfil</div>
+                <form th:action="@{/meu-perfil/foto}" method="post" enctype="multipart/form-data">
+                    <div class="foto-preview-wrap">
+                        <img th:src="${perfil.fotoPerfil != null} ? @{'/uploads/fotos/' + ${perfil.fotoPerfil}} : @{/images/avatar-default.png}"
+                             id="fotoPreview" class="foto-preview" alt="Preview da Foto">
+                    </div>
+                    <div class="form-group">
+                        <label>Alterar imagem</label>
+                        <input type="file" name="foto" id="fotoInput" accept="image/png, image/jpeg, image/gif">
+                        <span class="campo-info">Tamanho recomendado: 400x400px. Máximo 2MB.</span>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-salvar">📸 Atualizar Foto</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Scripts Integrados -->
+<script th:src="@{/js/home.js}"></script>
+<script th:src="@{/js/meu-perfil.js}"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Relatório de Visitantes</title>
+     <link rel="stylesheet" th:href="@{/css/painelp.css}">
+    <link rel="stylesheet" th:href="@{/css/visitantes.css}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+</head>
+<body>
+	
+	<!-- ══════════════════════════════════════
+     HEADER ADMIN
+════════════════════════════════════════ -->
+
+	
+	
+    <div class="painel-card" style="max-width: 900px;">
+
+        <h2>Relatório de Visitantes</h2>
+        <p class="painel-subtitle">
+            Logado como <strong sec:authentication="name"></strong>
+        </p>
+
+        <!-- Cards de resumo -->
+        <p class="section-title">Resumo</p>
+        <div class="cards-resumo">
+            <div class="card-numero">
+                <div class="numero" th:text="${visitantesHoje}">0</div>
+                <div class="legenda">Visitantes Hoje</div>
+            </div>
+            <div class="card-numero">
+                <div class="numero" th:text="${visitantesSemana}">0</div>
+                <div class="legenda">Esta Semana</div>
+            </div>
+            <div class="card-numero">
+                <div class="numero" th:text="${visitantesMes}">0</div>
+                <div class="legenda">Este Mês</div>
+            </div>
+            <div class="card-numero">
+                <div class="numero" th:text="${visitantesSeisMeses}">0</div>
+                <div class="legenda">Últimos 6 Meses</div>
+            </div>
+            <div class="card-numero">
+                <div class="numero" th:text="${visitantesAno}">0</div>
+                <div class="legenda">Último Ano</div>
+            </div>
+        </div>
+
+        <hr class="divider">
+
+        <!-- Gráfico com seletor de período -->
+        <div class="section-header">
+            <p class="section-title" id="grafico-titulo">Visitantes por Dia — Últimos 30 dias</p>
+            <div class="periodo-controls">
+                <div class="periodo-rapido">
+                    <button class="btn-periodo active" data-periodo="30d">30 dias</button>
+                    <button class="btn-periodo" data-periodo="6m">6 meses</button>
+                    <button class="btn-periodo" data-periodo="1a">1 ano</button>
+                    <button class="btn-periodo" data-periodo="custom">Personalizado</button>
+                </div>
+                <div class="periodo-custom" id="periodo-custom" style="display:none;">
+                    <label>De: <input type="date" id="dataInicio"></label>
+                    <label>Até: <input type="date" id="dataFim"></label>
+                    <button class="btn-aplicar" id="btnAplicar">Aplicar</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="graficoVisitantes"></canvas>
+        </div>
+
+        <div class="painel-footer" style="margin-top: 30px;">
+            <a th:href="@{/home}">← Voltar para o Início</a>
+        </div>
+
+    </div>
+
+    <!-- Dados iniciais injetados pelo Thymeleaf (últimos 30 dias) -->
+    <script th:inline="javascript">
+        const labelsData  = /*[[${labels}]]*/ [];
+        const valoresData = /*[[${valores}]]*/ [];
+    </script>
+    <script th:src="@{/js/visitantes.js}"></script>
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Inscritos nos Eventos</title>
+     <link rel="stylesheet" th:href="@{/css/painelp.css}">
+    <link rel="stylesheet" th:href="@{/css/operador.css}">
+</head>
+<body>
+    <div class="painel-card" style="max-width: 900px;">
+
+        <h2>Inscritos nos Eventos</h2>
+        <p class="painel-subtitle">
+            Logado como <strong sec:authentication="name"></strong>
+        </p>
+
+        <!-- Filtro -->
+        <p class="section-title">Filtrar Inscritos</p>
+        <form th:action="@{/operador/inscritos}" method="get" class="filtro-form">
+
+            <!-- Evento -->
+            <label class="label-select">
+                Evento
+                <select name="eventoId">
+                    <option value="">— Selecione um evento —</option>
+                    <option th:each="ev : ${eventos}"
+                            th:value="${ev.id}"
+                            th:text="${ev.titulo} + ' (' + ${ev.data} + ')'"
+                            th:selected="${eventoSelecionado != null && eventoSelecionado == ev.id}">
+                    </option>
+                </select>
+            </label>
+
+            <!-- Limite -->
+            <label class="label-select">
+                Exibir
+                <select name="limite" id="selectLimite" class="select-limite">
+                    <option th:each="op : ${sizeOptions}"
+                            th:value="${op}"
+                            th:text="${op}"
+                            th:selected="${op == limite}"></option>
+                </select>
+            </label>
+
+            <!-- Ordenação -->
+            <label class="label-select">
+                Ordenar por
+                <select name="sortBy" class="select-limite" style="width:130px !important;">
+                    <option value="nome"  th:selected="${sortBy == 'nome'}">Nome</option>
+                    <option value="email" th:selected="${sortBy == 'email'}">E-mail</option>
+                </select>
+            </label>
+
+            <!-- Direção -->
+            <label class="label-select">
+                Direção
+                <select name="dir" class="select-limite">
+                    <option value="asc"  th:selected="${dir == 'asc'}">A → Z</option>
+                    <option value="desc" th:selected="${dir == 'desc'}">Z → A</option>
+                </select>
+            </label>
+
+            <div style="display:flex; gap:10px; align-items:flex-end;">
+                <button type="submit" class="btn-filtrar">Filtrar</button>
+                <a th:href="@{/operador/inscritos}" class="btn-limpar">Limpar</a>
+            </div>
+
+        </form>
+
+        <hr class="divider">
+
+        <!-- Sem filtro -->
+        <div th:if="${eventoSelecionado == null}" class="aviso-filtro">
+            Selecione um evento acima para ver os inscritos.
+        </div>
+
+        <!-- Com filtro -->
+        <div th:unless="${eventoSelecionado == null}">
+            <p class="section-title">
+                Inscritos no Evento
+                <span style="font-weight:400; color:#888; text-transform:none; font-size:13px;">
+                    — exibindo até <span th:text="${limite}"></span> registros,
+                    ordenado por <span th:text="${sortBy}"></span>
+                    (<span th:text="${dir == 'asc' ? 'A → Z' : 'Z → A'}"></span>)
+                </span>
+            </p>
+
+            <div th:if="${#lists.isEmpty(inscritos)}" class="empty-msg">
+                Nenhum inscrito neste evento.
+            </div>
+
+            <table th:unless="${#lists.isEmpty(inscritos)}" class="eventos-table">
+                <thead>
+                    <tr>
+                        <th>
+                            <a th:href="@{/operador/inscritos(eventoId=${eventoSelecionado}, limite=${limite}, sortBy='nome', dir=${sortBy == 'nome' and dir == 'asc' ? 'desc' : 'asc'})}">
+                                Nome <span th:if="${sortBy == 'nome'}" th:text="${dir == 'asc' ? '▲' : '▼'}"></span>
+                            </a>
+                        </th>
+                        <th>
+                            <a th:href="@{/operador/inscritos(eventoId=${eventoSelecionado}, limite=${limite}, sortBy='email', dir=${sortBy == 'email' and dir == 'asc' ? 'desc' : 'asc'})}">
+                                E-mail <span th:if="${sortBy == 'email'}" th:text="${dir == 'asc' ? '▲' : '▼'}"></span>
+                            </a>
+                        </th>
+                        <th style="text-align:center;">Remover do Evento</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="u : ${inscritos}">
+                        <td th:text="${u.nome}"></td>
+                        <td th:text="${u.email}"></td>
+                        <td style="text-align:center;">
+                            <a th:href="@{/operador/inscritos/remover(usuarioId=${u.id}, eventoId=${eventoSelecionado}, limite=${limite}, sortBy=${sortBy}, dir=${dir})}"
+                               class="btn-excluir"
+                               onclick="return confirm('Confirma remoção deste inscrito?')">
+                                Remover
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="painel-footer">
+            <a th:href="@{/home}">← Voltar para o Início</a>
+        </div>
+
+    </div>
+
+    <script th:src="@{/js/inscritos.js}"></script>
+</body>
+</html>

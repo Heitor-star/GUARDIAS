@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guardiãs das Águas</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
+    <link rel="stylesheet" th:href="@{/css/painel.css}">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+     
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css">
+</head>
+
+<body>
+
+<!-- ════════════════════════════════════════
+         HEADER - NAV
+    ════════════════════════════════════════ -->
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+   <!-- ════════════════════════════════════════
+         MENU — ADMINISTRADOR
+    ════════════════════════════════════════ -->
+    
+    <div class="painel-admin"
+    sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_OPERADOR')">
+    
+    <a th:href="@{/admin/painel}" class="toggle-sidebar">
+    ⚙
+    </a>
+
+   
+    </div>
+
+<!-- ====================================================HERO======================================================================= -->
+	 <main>
+        <!-- HERO E CARROSSEL -->
+        <section class="sobre">
+            <div class="sobre-duplo">
+                
+                <!-- COLUNA ESQUERDA -->
+                <div class="conteudo-esquerda">
+                    <div class="hero-texto">
+                        <h2>Guardiãs das Águas</h2>
+                        <h3>Meninas pelo Saneamento</h3>
+                        <p>Promovendo o protagonismo feminino na ciência e a preservação dos recursos hídricos através da educação e tecnologia.</p>
+                        <a th:href="@{/cadastro}"class="btn-cta">Faça parte!</a>
+                    </div>
+
+                    
+                </div>
+
+                <!-- COLUNA DIREITA (CARROSSEL COM VIDRO LÍQUIDO) -->
+                <div class="conteudo-direita">
+                    <div class="slide">
+                        <div class="sobre-integrado">
+                            <h2>Sobre o Projeto</h2>
+                            <div class="texto">
+                                <p>O projeto Guardiãs das Águas visa promover uma educação de qualidade para meninas das regiões Nordeste, Centro-Oeste, Sudeste e Sul do Brasil.</p>
+                                <p>Buscamos inserir meninas e mulheres no meio científico através de pesquisas sobre hidrologia e análise de dados.</p>
+                            </div>
+                            <div class="video">
+                                <iframe src="https://www.youtube.com/embed/YAmCkvNIiYg?start=1" title="Projeto Guardiãs das Águas" frameborder="0" allowfullscreen></iframe>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+            </div>
+        </section>
+
+<!-- ====================================================HERO======================================================================= -->
+
+
+
+<!-- ====================================================CARDS======================================================================= -->
+        <section class="cont_card">
+            <div class="card">
+                <h2>Nossa Missão</h2>
+                <p>Empoderar mulheres na ciência e estimular a participação ativa das comunidades locais na preservação dos recursos hídricos, transformando realidades através da educação e da tecnologia.</p>
+            </div>
+
+            <div class="card">
+                <h2>Nossa Visão</h2>
+                <p>Ser referência nacional na formação de jovens lideranças femininas na Engenharia Ambiental, garantindo que o saneamento básico e a conservação das águas cheguem a todos os cantos do Brasil.</p>
+            </div>
+
+            <div class="card">
+                <h2>Nossos Valores</h2>
+                <ul>
+                    <li><strong>Protagonismo Feminino:</strong> Lugar de mulher é na ciência.</li>
+                    <li><strong>Sustentabilidade:</strong> Cuidar das águas hoje para garantir o amanhã.</li>
+                    <li><strong>Educação Cidadã:</strong> O conhecimento transforma a comunidade.</li>
+                    <li><strong>Inovação:</strong> Tecnologia a serviço da natureza.</li>
+                </ul>
+            </div>
+        </section>
+        
+<!-- ====================================================CARDS======================================================================= -->
+
+
+<!-- ====================================================MAPA======================================================================= -->        
+
+        <!-- SEÇÃO DE MAPA E PARTICIPAÇÃO (Restauradas) -->
+        <section class="mapa has-shown">
+            <div class="container">
+                <h2>Onde estamos</h2>
+                <p>Nosso projeto está presente em diversas regiões do Brasil promovendo educação ambiental e protagonismo feminino.</p>
+                <div id="mapa"></div>
+            </div>
+        </section>
+<!-- ====================================================MAPA======================================================================= --> 
+    </main>
+
+<!-- ════════════════════════════════════════
+         FOOTER 
+    ════════════════════════════════════════ -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script th:src="@{/js/mapa.js}"></script>
+<script th:src="@{/js/engine.js}"></script>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<header th:fragment="header">
+
+    <div class="navbar">
+
+        <!-- LOGO -->
+        <div class="logo">
+            <a th:href="@{/}">
+                <img th:src="@{/img/design1.png}" alt="Guardiãs das Águas">
+            </a>
+
+            <h1>Guardiãs das Águas</h1>
+        </div>
+
+        <!-- MENU DESKTOP -->
+        <nav class="menu-desktop">
+
+            <a th:href="@{/}">Início</a>
+
+            <div class="dropdown">
+                <a th:href="@{/projetos}">Projeto ▾</a>
+
+                <div class="dropdown-conteudo">
+                    <a th:href="@{/projetos}">Proposta do Projeto</a>
+                    <a th:href="@{/projetos#galeria}">Galeria</a>
+                    <a th:href="@{/calendario}">Agenda</a>
+                    <a th:href="@{/#mapa}">Núcleos pelo Brasil</a>
+                </div>
+            </div>
+
+            <a th:href="@{/inspiracoes-fem}">Inspirações Femininas</a>
+
+            <a th:href="@{/blog}">Blog</a>
+
+            <div class="dropdown">
+                <a th:href="@{/contato}">Contato ▾</a>
+
+                <div class="dropdown-conteudo">
+                    <a th:href="@{/suporte}">Dúvidas</a>
+                    <a th:href="@{/suporte}">Denuncie!</a>
+                </div>
+            </div>
+            
+             <a th:href="@{/meu-perfil}">Perfil</a>
+
+        </nav>
+
+        <!-- CTA -->
+        <a th:href="@{/cadastro}" class="btn-nav">Faça Parte</a>
+
+        <!-- BOTÃO MOBILE -->
+        <button class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </div>
+
+    <!-- MENU MOBILE -->
+    <div class="menu-mobile">
+
+        <button class="fechar-menu">✕</button>
+
+        <nav>
+
+            <a th:href="@{/}">Início</a>
+
+            <details>
+                <summary>Projeto</summary>
+
+                <div class="submenu-mobile">
+                    <a th:href="@{/projetos}">Proposta do Projeto</a>
+                    <a th:href="@{/projetos#galeria}">Galeria</a>
+                    <a th:href="@{/calendario}">Agenda</a>
+                    <a th:href="@{/#mapa}">Núcleos pelo Brasil</a>
+                </div>
+            </details>
+
+            <a th:href="@{/inspiracoes-fem}">Inspirações<br>Femininas</a>
+
+            <a th:href="@{/blog}">Blog</a>
+
+            <a th:href="@{/meu-perfil}">Perfil</a>
+
+            <details>
+                <summary>Contato</summary>
+
+                <div class="submenu-mobile">
+                    <a th:href="@{/suporte}">Dúvidas</a>
+                    <a th:href="@{/suporte}">Denuncie!</a>
+                </div>
+            </details>
+
+            <a th:href="@{/cadastro}" class="btn-mobile">Faça Parte</a>
+
+        </nav>
+
+    </div>
+
+</header>
+
+</body>
+</html>

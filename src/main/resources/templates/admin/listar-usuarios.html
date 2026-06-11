@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Usuarios Cadastrados</title>
+     <link rel="stylesheet" th:href="@{/css/painelp.css}">
+    <link rel="stylesheet" th:href="@{/css/usuarios.css}">
+
+</head>
+
+<body>
+
+
+<div class="painel-card">
+
+    <h2>Usuarios Cadastrados</h2>
+
+    <p class="painel-subtitle">
+        Logado como <strong sec:authentication="name"></strong>
+    </p>
+
+    <!-- Mensagem flash -->
+    <div th:if="${mensagem}" class="alerta-sucesso" th:text="${mensagem}"></div>
+
+    <!-- Pesquisa -->
+    <form th:action="@{/admin/listar-usuarios}" method="get">
+        <div class="title-search-bar">
+            <span class="section-title" style="margin:0; border:none; padding:0;">
+                Pesquisar Usuario
+            </span>
+            <input type="text" name="busca" th:value="${busca}" placeholder="Buscar por nome ou e-mail...">
+            <input type="hidden" name="size"   th:value="${size}">
+            <input type="hidden" name="sortBy" th:value="${sortBy}">
+            <input type="hidden" name="dir"    th:value="${dir}">
+            <button type="submit" class="btn-search">&#128269; Buscar</button>
+            <a th:href="@{/admin/listar-usuarios}" class="btn-search-clear">Limpar</a>
+        </div>
+    </form>
+
+    <!-- Controles -->
+    <div class="table-controls">
+        <p class="section-title" style="margin:0;">
+            Usuarios Cadastrados
+            <span class="badge-total" th:text="'(' + ${totalUsuarios} + ' encontrado(s))'"></span>
+        </p>
+        <div class="controls-right">
+            <label>
+                Exibir:
+                <select id="selectSize" class="select-small">
+                    <option th:each="op : ${sizeOptions}"
+                            th:value="${op}"
+                            th:text="${op}"
+                            th:selected="${op == size}">
+                    </option>
+                </select>
+                por pagina
+            </label>
+        </div>
+    </div>
+
+    <!-- Tabela -->
+    <div th:if="${#lists.isEmpty(usuarios)}" class="empty-msg">
+        Nenhum usuario encontrado.
+    </div>
+
+    <table th:unless="${#lists.isEmpty(usuarios)}" class="eventos-table">
+        <thead>
+            <tr>
+                <th>
+                    <a th:href="@{/admin/listar-usuarios(page=0,size=${size},sortBy='nome',dir=${sortBy=='nome' and dir=='asc'?'desc':'asc'},busca=${busca})}">
+                        Nome
+                        <span th:if="${sortBy=='nome'}" th:text="${dir=='asc'?'▲':'▼'}"></span>
+                    </a>
+                </th>
+                <th>
+                    <a th:href="@{/admin/listar-usuarios(page=0,size=${size},sortBy='email',dir=${sortBy=='email' and dir=='asc'?'desc':'asc'},busca=${busca})}">
+                        E-mail
+                        <span th:if="${sortBy=='email'}" th:text="${dir=='asc'?'▲':'▼'}"></span>
+                    </a>
+                </th>
+                <th>CPF</th>
+                <th>Telefone</th>
+                <th>
+                    <a th:href="@{/admin/listar-usuarios(page=0,size=${size},sortBy='tipo',dir=${sortBy=='tipo' and dir=='asc'?'desc':'asc'},busca=${busca})}">
+                        Perfil
+                        <span th:if="${sortBy=='tipo'}" th:text="${dir=='asc'?'▲':'▼'}"></span>
+                    </a>
+                </th>
+                <th>Acoes</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="u : ${usuarios}">
+                <td th:text="${u.nome}"></td>
+                <td th:text="${u.email}"></td>
+                <td th:text="${u.cpf}"></td>
+                <td th:text="${u.telefone}"></td>
+                <td>
+                    <span th:if="${u.tipo == 'ROLE_ADMIN'}"    class="badge-role admin">Administrador</span>
+                    <span th:if="${u.tipo == 'ROLE_OPERADOR'}" class="badge-role operador">Operador</span>
+                    <span th:if="${u.tipo == 'ROLE_USER'}"     class="badge-role user">Usuario</span>
+                </td>
+                <td>
+                    <a th:href="@{/admin/deletarUsuario/{id}(id=${u.id})}"
+                       class="btn-excluir"
+                       onclick="return confirm('Confirma exclusao do usuario?')">
+                        Excluir
+                    </a>
+                    <a href="#"
+                       class="btn-alterar btn-abrir-modal"
+                       th:data-id="${u.id}"
+                       th:data-nome="${u.nome}"
+                       th:data-tipo="${u.tipo}">
+                        Alterar Perfil
+                    </a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <!-- Paginacao -->
+    <div class="paginacao" th:if="${totalPages > 1}">
+        <a th:href="@{/admin/listar-usuarios(page=${currentPage-1},size=${size},sortBy=${sortBy},dir=${dir},busca=${busca})}"
+           th:classappend="${currentPage==0}?'disabled'" class="btn-page">
+            &#8592; Anterior
+        </a>
+        <span th:each="i : ${#numbers.sequence(0, totalPages - 1)}">
+            <a th:href="@{/admin/listar-usuarios(page=${i},size=${size},sortBy=${sortBy},dir=${dir},busca=${busca})}"
+               th:text="${i+1}"
+               th:classappend="${i==currentPage}?'active'"
+               class="btn-page">
+            </a>
+        </span>
+        <a th:href="@{/admin/listar-usuarios(page=${currentPage+1},size=${size},sortBy=${sortBy},dir=${dir},busca=${busca})}"
+           th:classappend="${currentPage==totalPages-1}?'disabled'" class="btn-page">
+            Proximo &#8594;
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <div class="painel-footer">
+        <a th:href="@{/admin/usuarios}">+ Cadastrar novo usuario</a>
+        &nbsp;|&nbsp;
+        <a th:href="@{/home}">&#8592; Voltar para o Inicio</a>
+    </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalPerfil">
+    <div class="modal-box">
+        <h3>Alterar Perfil</h3>
+        <p>Usuario: <strong id="modalNome"></strong></p>
+
+        <form th:action="@{/admin/alterarPerfil}" method="post">
+            <input type="hidden" id="modalId"   name="id">
+            <input type="hidden" name="busca"   th:value="${busca}">
+            <input type="hidden" name="page"    th:value="${currentPage}">
+            <input type="hidden" name="size"    th:value="${size}">
+            <input type="hidden" name="sortBy"  th:value="${sortBy}">
+            <input type="hidden" name="dir"     th:value="${dir}">
+
+            <label>Novo Perfil</label>
+            <select id="modalTipo" name="tipo">
+                <option value="ROLE_USER">Usuario Comum</option>
+                <option value="ROLE_OPERADOR">Operador</option>
+                <option value="ROLE_ADMIN">Administrador</option>
+            </select>
+
+            <div class="modal-actions">
+                <button type="button" class="btn-modal-cancelar" onclick="fecharModal()">Cancelar</button>
+                <button type="submit" class="btn-modal-salvar">Salvar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script th:src="@{/js/usuarios.js}"></script>
+
+</body>
+</html>

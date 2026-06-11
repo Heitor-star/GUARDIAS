@@ -1,0 +1,162 @@
+/* usuarios.css */
+
+.painel-card {
+    background: #1e293b;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 600px;
+    margin: 2rem auto;
+    border: 1px solid rgba(255,255,255,0.1);
+    color: #f8fafc;
+}
+
+.painel-subtitle {
+    font-size: 0.9rem;
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.section-title {
+    color: #3b82f6;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid rgba(59,130,246,0.2);
+    padding-bottom: 5px;
+}
+
+.form-group {
+    margin-bottom: 1.2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.85rem;
+    color: #cbd5e1;
+}
+
+.form-group input,
+.select-perfil {
+    width: 100%;
+    padding: 0.75rem;
+    background: #0f172a;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px;
+    color: #f8fafc;
+    box-sizing: border-box;
+    font-size: 0.9rem;
+    transition: border-color 0.2s;
+}
+
+.form-group input::placeholder {
+    color: #475569;
+}
+
+.form-group input:focus,
+.select-perfil:focus {
+    border-color: #3b82f6;
+    outline: none;
+    background: #0f172a;
+    color: #f8fafc;
+}
+
+/* Fix autofill branco do browser */
+.form-group input:-webkit-autofill,
+.form-group input:-webkit-autofill:hover,
+.form-group input:-webkit-autofill:focus,
+.form-group input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px #0f172a inset !important;
+    -webkit-text-fill-color: #f8fafc !important;
+    caret-color: #f8fafc;
+    border: 1px solid rgba(255,255,255,0.2) !important;
+}
+
+.select-perfil option {
+    background: #1e293b;
+    color: #f8fafc;
+}
+
+.row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.btn-publicar {
+    width: 100%;
+    padding: 1rem;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.9rem;
+    letter-spacing: 0.05em;
+    transition: background 0.2s, transform 0.1s;
+}
+
+.btn-publicar:hover  { background: #2563eb; }
+.btn-publicar:active { transform: scale(0.99); }
+
+.error-msg {
+    color: #ef4444;
+    font-size: 0.75rem;
+    margin-top: 4px;
+    display: block;
+}
+
+.alerta-erro {
+    background: rgba(239,68,68,0.1);
+    color: #ef4444;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    text-align: center;
+    border: 1px solid rgba(239,68,68,0.3);
+}
+
+.alerta-sucesso {
+    background: rgba(16,185,129,0.1);
+    color: #10b981;
+    padding: 10px;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    font-size: 0.85rem;
+    text-align: center;
+    border: 1px solid rgba(16,185,129,0.3);
+}
+
+.painel-footer {
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 0.85rem;
+}
+
+.painel-footer a {
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.painel-footer a:hover { color: #f8fafc; }
+
+@media (max-width: 520px) {
+    .row-2 { grid-template-columns: 1fr; }
+    .painel-card { margin: 1rem; padding: 1.5rem; }
+}
+
+/* ── Badges de perfil na tabela ── */
+.badge-role {
+    padding: 3px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.badge-role.admin    { background: rgba(239,68,68,0.15);   color: #ef4444; }
+.badge-role.operador { background: rgba(245,158,11,0.15);  color: #f59e0b; }
+.badge-role.user     { background: rgba(16,185,129,0.15);  color: #10b981; }

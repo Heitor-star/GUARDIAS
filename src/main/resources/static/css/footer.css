@@ -1,0 +1,41 @@
+.footer {
+    height: 20vh;
+	 background-image: linear-gradient(
+        -45deg,
+        rgba(233, 216, 166, 0.2),
+        rgba(231, 162, 199, 0.2),
+        rgba(140, 111, 179, 0.2),
+        rgba(127, 159, 193, 0.2),
+        rgba(127, 174, 196, 0.2)
+    );
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    padding: 2rem;
+    gap: .6rem;
+}
+
+.footer > div  {
+    display: flex;
+    gap: 2rem;
+    padding: .2rem;
+}
+
+.footer a {    
+    color: rgb(255, 255, 255);
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
+small {
+    color: rgb(255, 255, 255);
+    font-weight: 600;
+}
+
+.footer img {
+    height: 45px;
+    width: auto;
+}

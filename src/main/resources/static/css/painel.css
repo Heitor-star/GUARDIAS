@@ -1,0 +1,98 @@
+/* =========================================
+   PAINEL ADMIN — paineladmin.css
+   Depende de: style.css + header.css
+   ========================================= */
+
+/* ── MAIN: fundo animado igual ao home ── */
+.admin-main {
+    background: linear-gradient(
+        -45deg,
+        rgba(233, 216, 166, 0.6),
+        rgba(140, 111, 179, 0.6),
+        rgba(127, 159, 193, 0.6),
+        rgba(127, 174, 196, 0.6)
+    );
+    background-size: 300% 300%;
+    animation: gradient 12s ease infinite;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12rem 2rem 6rem; /* 12rem compensam a navbar fixa */
+}
+
+/* ── CARD PRINCIPAL (mesmo visual da imagem 4) ── */
+.painel-card {
+    width: 100%;
+    max-width: 900px;
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 8px 40px rgba(91, 40, 158, 0.13);
+    padding: 4rem;
+}
+
+.painel-card h2 {
+    font-size: 2.8rem;
+    color: var(--cor-texto-forte);
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.painel-subtitle {
+    font-size: 1.5rem;
+    color: #888;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.painel-subtitle strong {
+    color: var(--cor-primaria);
+}
+
+/* ── SECTION TITLE ── */
+.section-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: var(--cor-primaria);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 1.5rem;
+}
+
+/* ── DIVIDER ── */
+.divider {
+    border: none;
+    border-top: 1px solid #e8eaf0;
+    margin: 2.5rem 0;
+}
+
+/* ── FOOTER DO PAINEL ── */
+.painel-footer {
+    margin-top: 3rem;
+    text-align: center;
+}
+
+.painel-footer a {
+    font-size: 1.5rem;
+    color: var(--cor-primaria);
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+.painel-footer a:hover {
+    opacity: 0.75;
+}
+
+/* ── RESPONSIVO ── */
+@media (max-width: 768px) {
+    .admin-main {
+        padding: 10rem 1.5rem 4rem;
+    }
+    .painel-card {
+        padding: 2.5rem 2rem;
+    }
+    .painel-card h2 {
+        font-size: 2.2rem;
+    }
+}

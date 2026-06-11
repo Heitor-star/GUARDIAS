@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+<header th:fragment="headeradmin">
+    <div class="navbar">
+
+        <!-- LOGO -->
+        <div class="logo">
+            <a th:href="@{/}">
+                <img th:src="@{/img/design1.png}" alt="Guardiãs das Águas">
+            </a>
+            <h1>Guardiãs das Águas</h1>
+        </div>
+
+        <!-- MENU DESKTOP -->
+        <nav class="menu-desktop">
+
+            <div class="dropdown" sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_OPERADOR')">
+                <a href="#">Operação ▾</a>
+                <div class="dropdown-conteudo">
+                    <a th:href="@{/operador/painel}">📋 Painel Operador</a>
+                    <a th:href="@{/operador/inscritos}">👥 Inscritos nos Eventos</a>
+                    <a th:href="@{/admin/visitantes}">📊 Relatório de Visitantes</a>
+                    <a th:href="@{/operador/contatos}">✉ Mensagens Recebidas</a>
+                </div>
+            </div>
+
+            <div class="dropdown" sec:authorize="hasAuthority('ROLE_ADMIN')">
+                <a href="#">Administração ▾</a>
+                <div class="dropdown-conteudo">
+                    <a th:href="@{/admin/usuarios}">👤 Cadastrar Usuário</a>
+                    <a th:href="@{/admin/listar-usuarios}">📋 Listar Usuários</a>
+                </div>
+            </div>
+
+            <a th:href="@{/}">Início</a>
+            <a th:href="@{/meu-perfil}">Perfil</a>
+
+        </nav>
+
+        <!-- BOTÃO SAIR -->
+        <form th:action="@{/logout}" method="post" style="margin:0">
+            <button type="submit" class="btn-nav">Sair do Sistema</button>
+        </form>
+
+        <!-- HAMBÚRGUER MOBILE -->
+        <button class="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </div>
+
+    <!-- MENU MOBILE -->
+    <div class="menu-mobile">
+        <button class="fechar-menu">✕</button>
+        <nav>
+
+            <div sec:authorize="hasAnyAuthority('ROLE_ADMIN','ROLE_OPERADOR')">
+                <details>
+                    <summary>Operação</summary>
+                    <div class="submenu-mobile">
+                        <a th:href="@{/operador/painel}">📋 Painel Operador</a>
+                        <a th:href="@{/operador/inscritos}">👥 Inscritos nos Eventos</a>
+                        <a th:href="@{/admin/visitantes}">📊 Relatório de Visitantes</a>
+                        <a th:href="@{/operador/contatos}">✉ Mensagens Recebidas</a>
+                    </div>
+                </details>
+            </div>
+
+            <div sec:authorize="hasAuthority('ROLE_ADMIN')">
+                <details>
+                    <summary>Administração</summary>
+                    <div class="submenu-mobile">
+                        <a th:href="@{/admin/usuarios}">👤 Cadastrar Usuário</a>
+                        <a th:href="@{/admin/listar-usuarios}">📋 Listar Usuários</a>
+                    </div>
+                </details>
+            </div>
+
+            <a th:href="@{/}">Início</a>
+            <a th:href="@{/meu-perfil}">Perfil</a>
+
+            <form th:action="@{/logout}" method="post" style="margin:0">
+                <button type="submit" class="btn-mobile">Sair do Sistema</button>
+            </form>
+
+        </nav>
+    </div>
+</header>
+
+</body>
+</html>

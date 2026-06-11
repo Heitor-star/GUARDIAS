@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensagem | Admin</title>
+    <link rel="stylesheet" th:href="@{/css/painelp.css}">
+    <link rel="stylesheet" th:href="@{/css/contato-admin.css}">
+
+</head>
+<body>
+
+
+	
+<div class="painel-card">
+
+    <div class="detalhe-header">
+        <a th:href="@{/admin/contatos}" class="btn-voltar">&#8592; Voltar</a>
+        <h2>Mensagem de <span th:text="${contato.nome}"></span></h2>
+        <span class="badge-status respondida" th:if="${contato.respondida}">Respondida</span>
+        <span class="badge-status lida"       th:if="${contato.lida and !contato.respondida}">Lida</span>
+        <span class="badge-status nova"       th:unless="${contato.lida}">Nova</span>
+    </div>
+
+    <div th:if="${sucesso}" class="alerta-sucesso" th:text="${sucesso}"></div>
+
+    <div class="detalhe-meta">
+        <div class="meta-item"><strong>De:</strong> <span th:text="${contato.nome}"></span></div>
+        <div class="meta-item"><strong>E-mail:</strong> <span th:text="${contato.email}"></span></div>
+        <div class="meta-item" th:if="${contato.telefone}">
+            <strong>Telefone:</strong> <span th:text="${contato.telefone}"></span>
+        </div>
+        <div class="meta-item"><strong>Assunto:</strong> <span th:text="${contato.assunto}"></span></div>
+        <div class="meta-item">
+            <strong>Recebido em:</strong>
+            <span th:text="${#temporals.format(contato.dataEnvio, 'dd/MM/yyyy HH:mm')}"></span>
+        </div>
+    </div>
+
+    <div class="detalhe-mensagem">
+        <h3>Mensagem</h3>
+        <p th:text="${contato.mensagem}"></p>
+    </div>
+
+    <div class="detalhe-resposta" th:if="${contato.respondida}">
+        <h3>Resposta registrada</h3>
+        <p th:text="${contato.resposta}"></p>
+        <small th:text="'Respondido em: ' + ${#temporals.format(contato.dataResposta, 'dd/MM/yyyy HH:mm')}"></small>
+    </div>
+
+    <div class="detalhe-form-resposta" th:unless="${contato.respondida}">
+        <h3>Registrar Resposta</h3>
+        <form th:action="@{/admin/contatos/{id}/responder(id=${contato.id})}" method="post">
+            <div class="form-group">
+                <textarea name="resposta" rows="5"
+                          placeholder="Digite a resposta para esta mensagem..." required></textarea>
+            </div>
+            <button type="submit" class="btn-publicar">Salvar Resposta</button>
+        </form>
+    </div>
+
+    <div class="detalhe-acoes">
+        <form th:action="@{/admin/contatos/{id}/deletar(id=${contato.id})}" method="post"
+              onsubmit="return confirm('Confirma exclusao desta mensagem?')">
+            <button type="submit" class="btn-excluir">Excluir Mensagem</button>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>

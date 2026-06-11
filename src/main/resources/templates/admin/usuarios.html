@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novo Usuario | Painel</title>
+     <link rel="stylesheet" th:href="@{/css/painelp.css}">
+    <link rel="stylesheet" th:href="@{/css/usuarios.css}">
+</head>
+<body>
+	
+
+
+    <div class="painel-card">
+        <h2>Gerenciar Usuarios</h2>
+        <p class="painel-subtitle">Logado como <strong sec:authentication="name"></strong></p>
+
+        <div th:if="${mensagem}" class="alerta-sucesso" th:text="${mensagem}"></div>
+
+        <p class="section-title">Novo Usuario</p>
+        <form th:action="@{/admin/salvar-usuario}" th:object="${cadastroDTO}" method="post">
+
+            <div class="form-group">
+                <label>Nome Completo</label>
+                <input type="text" th:field="*{nome}" placeholder="Nome do usuario" required>
+                <span class="error-msg" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></span>
+            </div>
+
+            <div class="form-group">
+                <label>E-mail</label>
+                <input type="email" th:field="*{email}" placeholder="email@exemplo.com" required>
+                <span class="error-msg" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span>
+            </div>
+
+            <div class="row-2">
+                <div class="form-group">
+                    <label>CPF</label>
+                    <input type="text" th:field="*{cpf}" id="cpf"
+                           placeholder="000.000.000-00" maxlength="14" required>
+                    <span class="error-msg" th:if="${#fields.hasErrors('cpf')}" th:errors="*{cpf}"></span>
+                </div>
+                <div class="form-group">
+                    <label>Telefone / WhatsApp</label>
+                    <input type="text" th:field="*{telefone}" id="telefone"
+                           placeholder="(00) 00000-0000" maxlength="15" required>
+                    <span class="error-msg" th:if="${#fields.hasErrors('telefone')}" th:errors="*{telefone}"></span>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Senha Inicial</label>
+                <input type="password" th:field="*{senha}"
+                       placeholder="Min. 8 caracteres, 1 maiuscula, 1 numero, 1 especial" required>
+                <span class="error-msg" th:if="${#fields.hasErrors('senha')}" th:errors="*{senha}"></span>
+            </div>
+
+            <div class="form-group">
+                <label>Perfil</label>
+                <select th:field="*{tipo}" class="select-perfil">
+                    <option value="ROLE_USER">Usuario Comum</option>
+                    <option value="ROLE_OPERADOR">Operador</option>
+                    <option value="ROLE_ADMIN">Administrador</option>
+                </select>
+            </div>
+
+            <div th:if="${erroSenha}" class="alerta-erro" th:text="${erroSenha}"></div>
+
+            <button type="submit" class="btn-publicar">CADASTRAR USUARIO</button>
+        </form>
+
+        <div class="painel-footer">
+            <a th:href="@{/admin/listar-usuarios}">Ver usuarios cadastrados</a>
+            &nbsp;|&nbsp;
+            <a th:href="@{/home}">Voltar para o Inicio</a>
+        </div>
+    </div>
+    <script th:src="@{/js/usuarios.js}"></script>
+</body>
+</html>

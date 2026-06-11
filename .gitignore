@@ -1,0 +1,13 @@
+.metadata/
+.settings/
+.project
+.classpath
+
+target/
+node_modules/
+
+.vscode/
+.idea/
+
+cypress/videos/
+cypress/screenshots/

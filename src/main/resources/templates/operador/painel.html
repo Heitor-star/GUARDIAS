@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Painel Operador</title>
+    <link rel="stylesheet" th:href="@{/css/painelp.css}">
+    <link rel="stylesheet" th:href="@{/css/operador.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+</head>
+<body>
+
+	<!-- ══════════════════════════════════════
+     HEADER ADMIN
+	════════════════════════════════════════ -->
+	<div th:replace="~{fragments/headeradmin :: headeradmin}"></div>
+
+    <div class="painel-card">
+
+        <h2>Painel do Operador</h2>
+        <p class="painel-subtitle">
+            Logado como <strong sec:authentication="name"></strong>
+        </p>
+
+        <!-- Formulário novo evento -->
+        <p class="section-title">Novo Evento</p>
+        <form th:action="@{/operador/salvarEvento}" method="post">
+            <div class="form-group">
+                <label>Título do Evento</label>
+                <input type="text" name="titulo" placeholder="Ex: Reunião de planejamento" required>
+            </div>
+            <div class="form-group">
+                <label>Data</label>
+                <input type="date" name="data" required>
+            </div>
+            <div class="form-group">
+                <label>Descrição / Observações</label>
+                <textarea name="descricao" placeholder="Detalhes do evento..."></textarea>
+            </div>
+            <button type="submit" class="btn-publicar">PUBLICAR NA AGENDA</button>
+        </form>
+
+       <hr class="divider">
+
+        <!-- Lista de eventos cadastrados -->
+        <p class="section-title">Eventos Cadastrados</p>
+
+        <div th:if="${#lists.isEmpty(eventos)}" class="empty-msg">
+            Nenhum evento cadastrado ainda.
+        </div>
+
+        <table th:unless="${#lists.isEmpty(eventos)}" class="eventos-table">
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Data</th>
+                    <th>Descrição</th>
+                    <th>Ação</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="ev : ${eventos}">
+                    <td th:text="${ev.titulo}"></td>
+                    <td th:text="${#temporals.format(ev.data, 'dd/MM/yyyy')}"></td>
+                    <td th:text="${ev.descricao}"></td>
+                    <td>
+                        <a th:href="@{/operador/deletarEvento/{id}(id=${ev.id})}"
+                           class="btn-excluir"
+                           onclick="return confirm('Confirma exclusão do evento?')">Excluir</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="painel-footer">
+            <a th:href="@{/home}">← Voltar para o Início</a>
+        </div>
+
+    </div>
+
+</body>
+</html>

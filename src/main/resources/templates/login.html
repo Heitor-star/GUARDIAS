@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+	<link rel="stylesheet" th:href="@{/css/header.css}">
+	<link rel="stylesheet" th:href="@{/css/footer.css}">
+	<link rel="stylesheet" th:href="@{/css/login.css}">
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+         HEADER - NAV
+    ════════════════════════════════════════ -->
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<main class="login-page">
+
+    <div class="login-card">
+
+    <div class="card-header">
+        <h2>Acesse sua conta</h2>
+        <p>Entre com seu e-mail e senha cadastrados</p>
+    </div>
+
+    <div class="card-body">
+
+        <div th:if="${param.error}" class="alerta alerta-erro">
+            E-mail ou senha invalidos. Tente novamente.
+        </div>
+
+        <div th:if="${param.cadastrado}" class="alerta alerta-sucesso">
+            Cadastro realizado com sucesso! Faca seu login.
+        </div>
+
+        <form th:action="@{/login}" method="post" id="formLogin">
+
+            <div class="form-group">
+                <label for="username">E-mail</label>
+                <input type="email" id="username" name="username"
+                       placeholder="exemplo@email.com"
+                       autocomplete="email" required autofocus>
+                <span class="campo-erro" id="email-erro"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Senha</label>
+                <div class="input-senha-wrapper">
+                    <input type="password" id="password" name="password"
+                           placeholder="Digite sua senha"
+                           autocomplete="current-password" required>
+                    <button type="button" class="btn-toggle-senha" id="toggleSenha" aria-label="Mostrar senha">
+                        <svg id="icone-olho" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
+                            <circle cx="12" cy="12" r="3"/>
+                        </svg>
+                    </button>
+                </div>
+                <span class="campo-erro" id="senha-erro"></span>
+            </div>
+
+            <button type="submit" class="btn-login">
+                <span class="btn-text">Entrar</span>
+                <svg class="btn-icon" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                     stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12"/>
+                    <polyline points="12 5 19 12 12 19"/>
+                </svg>
+            </button>
+
+        </form>
+
+        <!--
+        LOGIN COM GOOGLE - descomente apos preencher as credenciais no application.properties
+
+        <div class="divisor"><span>ou continue com</span></div>
+        <a href="/oauth2/authorization/google" class="btn-google">
+            <svg width="18" height="18" viewBox="0 0 48 48">
+                <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+                <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+                <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+                <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            </svg>
+            Continuar com Google
+        </a>
+        -->
+
+    </div>
+
+    <div class="card-footer">
+        <a th:href="@{/cadastro}">Nao tem conta? <strong>Cadastre-se</strong></a>
+    </div>
+
+    </div>
+
+</main>
+
+<!-- ════════════════════════════════════════
+         FOOTER 
+    ════════════════════════════════════════ -->
+
+<div th:replace="~{fragments/footer :: footer}"></div>
+
+<script th:src="@{/js/login.js}"></script>
+
+</body>
+</html>

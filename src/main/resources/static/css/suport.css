@@ -1,0 +1,140 @@
+body
+
+    {
+    font-family: 'Poppins', sans-serif;
+   color: #42451e;
+    background-color: #e2e9d6;   
+   }    
+
+   .nav-icon {
+    display: block;
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    vertical-align: middle;
+  }
+  .nav-logo{
+    display: block;
+    width: 200px;
+    height: 55px;
+  }    
+  
+.menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    padding: 12px 20px;
+    align-items: center;
+
+  }
+
+.container{
+    background-image: url("/Projeto_guardiã/IMAGENS/fundo.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  top: 0;
+  left: 0;
+  width: 100%;
+  color: white;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  padding-inline: 15px;
+}
+.submenu {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    min-width: 200px;
+    list-style: none;
+    padding: 6px 0;
+    margin: 0;
+    background-color: rgba(25, 80, 37, 0.849);
+    border-radius: 6px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    
+  
+    opacity: 0;
+    transform: translateY(8px) scale(0.99);
+    visibility: hidden;
+    pointer-events: none;
+  
+    transition: opacity 180ms ease, transform 180ms ease, visibility 180ms;
+    z-index: 100;
+}
+.submenu li a{
+    color:white;
+    padding: 10px 16px;
+    display: block;
+    white-space: nowrap;
+}
+  
+  /* Mostrar ao passar o mouse ou quando o filho tem foco (teclado) */
+  .dropdown:hover .submenu,
+  .dropdown:focus-within .submenu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  
+  /* Hover nos itens do submenu */
+  .submenu li a:hover {
+    background-color: rgb(25, 80, 37);
+  }
+  
+  /* Responsivo */
+  @media (max-width: 640px) {
+    .menu { flex-direction: column; align-items: stretch; gap: 8px; }
+    .dropdown .submenu { position: static; margin-top: 6px; box-shadow: none; }
+  }
+  *{ 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+    color: white;
+  }
+  h1{
+ color: black;
+ text-align: justify;
+ margin: 50px;
+  }
+  h3{
+    color: black;
+  }
+  p{
+    color: black;
+  }
+  
+.number{
+    color: black;
+}
+
+  
+
+   
+
+
+    
+ 
+
+ 
+
+
+
+ 
+
+
+
+
+ 
+
+ 
+        
+
+ 
+
+    

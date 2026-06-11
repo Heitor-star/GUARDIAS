@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projetos</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/projetos.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header class="navbar">
+    <div class="logo">
+        <a th:href="@{/}">
+            <img th:src="@{/img/design1.png}" alt="Guardiãs das Águas">
+        </a>
+        <h1>Guardiãs das Águas</h1>
+    </div>
+
+    <nav class="menu">
+        <a th:href="@{/}">Início</a>
+
+        <div class="dropdown">
+            <a th:href="@{/projetos}">Projeto ▾</a>
+            <div class="dropdown-conteudo">
+                <a href="#">Proposta do Projeto</a>
+                <a th:href="@{/projetos}">Projetos</a>
+                <a th:href="@{/projetos#galeria}">Galeria</a>
+                <a th:href="@{/projetos#agenda}">Agenda de Eventos</a>
+                <a th:href="@{/#mapa}">Núcleos pelo Brasil</a>
+            </div>
+        </div>
+		
+		<a th:href="@{/blog}">Blog</a>
+        <a th:href="@{/faq}">Inspirações Femininas</a>
+        
+
+        <div class="dropdown">
+            <a th:href="@{/contato}">Contatos ▾</a>
+            <div class="dropdown-conteudo">
+                <a th:href="@{/suporte}">Denuncie!</a>
+                <a th:href="@{/suporte}">Ajuda</a>
+            </div>
+        </div>
+
+        <a th:href="@{/cadastro}">Faça Parte</a>
+
+        <div class="redes">
+            <a href="https://www.instagram.com/guardias.aguas" target="_blank">
+                <img th:src="@{/img/logo_instagram.png}" alt="Instagram">
+            </a>
+            <a href="https://youtube.com" target="_blank">
+                <img th:src="@{/img/logo_youtube.png}" alt="YouTube">
+            </a>
+        </div>
+    </nav>
+</header>
+
+<!-- PROJETOS -->
+<section class="projetos" id="projetos">
+    <h1>Projetos Guardiã das Águas</h1>
+    <hr>
+
+    <div class="listprojetos">
+
+        <figure>
+            <img th:src="@{/img/rio_uberabinha.jpg}">
+            <figcaption>Proteção das Nascentes do Uberabinha</figcaption>
+        </figure>
+
+        <figure>
+            <img th:src="@{/img/rio_uberabinha.jpg}">
+            <figcaption>Revitaliza Uberabinha — Parque Linear</figcaption>
+        </figure>
+
+        <figure>
+            <img th:src="@{/img/rio_uberabinha.jpg}">
+            <figcaption>Uberabinha Limpa — Dias de Ação Comunitária</figcaption>
+        </figure>
+
+        <figure>
+            <img th:src="@{/img/rio_uberabinha.jpg}">
+            <figcaption>Educar para Recuperar — Uberabinha, meu amigo</figcaption>
+        </figure>
+
+        <figure>
+            <img th:src="@{/img/rio_uberabinha.jpg}">
+            <figcaption>Mudas pelo Rio — Reflorestamento</figcaption>
+        </figure>
+
+        <figure>
+            <img th:src="@{/img/rio_uberabinha.jpg}">
+            <figcaption>Águas Urbanas — Biofiltros</figcaption>
+        </figure>
+
+    </div>
+</section>
+
+<!-- AGENDA -->
+<section class="agenda" id="agenda">
+    <h1>Agenda de Eventos</h1>
+    <hr>
+
+    <div class="agenda-container">
+
+        <div class="calendar">
+            <h2>Novembro 2025</h2>
+
+            <div class="weekdays">
+                <div>Dom</div><div>Seg</div><div>Ter</div>
+                <div>Qua</div><div>Qui</div><div>Sex</div><div>Sáb</div>
+            </div>
+
+            <div class="days">
+                <div class="empty"></div>
+                <div class="empty"></div>
+
+                <div>1</div><div>2</div><div>3</div><div>4</div>
+                <div>5</div><div>6</div><div>7</div><div>8</div>
+                <div>9</div><div>10</div><div>11</div><div>12</div>
+                <div>13</div><div>14</div><div>15</div><div>16</div>
+                <div>17</div><div>18</div><div>19</div><div>20</div>
+                <div>21</div><div>22</div><div>23</div><div>24</div>
+                <div>25</div><div>26</div><div>27</div><div>28</div>
+                <div>29</div><div>30</div>
+            </div>
+        </div>
+
+        <div class="evento-info">
+            <h2>Evento Marcado</h2>
+            <p><strong>Tema:</strong> Sustentabilidade</p>
+            <p><strong>Local:</strong> Avenida Elis Regina</p>
+            <p><strong>Horário:</strong> 14h00</p>
+
+            <input type="text" placeholder="Digite seu email">
+            <button class="btn-enviar">Enviar</button>
+        </div>
+
+    </div>
+</section>
+
+<!-- GALERIA -->
+<section class="galeria" id="galeria">
+    <h1 style="text-align:center;">Galeria</h1>
+    <hr>
+
+    <div class="listgaleria">
+        <figure><img th:src="@{/img/rio_uberabinha.jpg}"></figure>
+        <figure><img th:src="@{/img/rio_uberabinha.jpg}"></figure>
+        <figure><img th:src="@{/img/rio_uberabinha.jpg}"></figure>
+        <figure><img th:src="@{/img/rio_uberabinha.jpg}"></figure>
+    </div>
+</section>
+
+</body>
+</html>

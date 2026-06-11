@@ -1,0 +1,233 @@
+/* ================================= */
+/* PAINEL ADMIN                      */
+/* ================================= */
+
+.painel-admin {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* ================================= */
+/* SIDEBAR                           */
+/* ================================= */
+
+.sidebar {
+    width: 260px;
+    min-height: 100vh;
+    background: rgba(91, 40, 158, 0.95);
+    display: flex;
+    flex-direction: column;
+    padding: 2rem 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+.sidebar-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 1rem;
+}
+
+.sidebar-header h3 {
+    color: white;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+}
+
+.sidebar-header p {
+    color: rgba(255,255,255,0.7);
+    font-size: 1.4rem;
+}
+
+/* ================================= */
+/* SIDEBAR NAV                       */
+/* ================================= */
+
+.sidebar-nav {
+    flex: 1;
+    padding: 1rem 0;
+}
+
+/* ================================= */
+/* ACCORDION                         */
+/* ================================= */
+
+.accordion-btn {
+    width: 100%;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: 600;
+    padding: 1.2rem 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.accordion-btn:hover {
+    background: rgba(255,255,255,0.1);
+}
+
+.btn-left {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.accordion-arrow {
+    transition: transform 0.3s;
+    font-size: 1.2rem;
+}
+
+.accordion.ativo .accordion-arrow {
+    transform: rotate(180deg);
+}
+
+.accordion-content {
+    display: none;
+    flex-direction: column;
+    background: rgba(0,0,0,0.15);
+    padding: 0.5rem 0;
+}
+
+.accordion.ativo .accordion-content {
+    display: flex;
+}
+
+.accordion-content a {
+    color: rgba(255,255,255,0.85);
+    font-size: 1.4rem;
+    padding: 1rem 2rem 1rem 3.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    transition: background 0.3s;
+}
+
+.accordion-content a:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+/* ================================= */
+/* SIDEBAR FOOTER                    */
+/* ================================= */
+
+.sidebar-footer {
+    padding: 2rem;
+    border-top: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-footer button {
+    width: 100%;
+    padding: 1.2rem;
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 10px;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.sidebar-footer button:hover {
+    background: rgba(255,255,255,0.25);
+}
+
+/* ================================= */
+/* CONTEÚDO PRINCIPAL                */
+/* ================================= */
+
+.admin-content {
+    margin-left: 260px;
+    flex: 1;
+    padding: 3rem;
+    background: #f5f5f5;
+    min-height: 100vh;
+}
+
+.admin-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 3rem;
+}
+
+.admin-topbar h2 {
+    font-size: 2.4rem;
+    color: #333;
+}
+
+.admin-topbar span {
+    font-size: 1.5rem;
+    color: #666;
+}
+
+/* ================================= */
+/* CARDS                             */
+/* ================================= */
+
+.admin-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 2rem;
+}
+
+.admin-card {
+    background: white;
+    border-radius: 16px;
+    padding: 2.5rem 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.07);
+    transition: transform 0.3s, box-shadow 0.3s;
+    color: #333;
+}
+
+.admin-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 25px rgba(91,40,158,0.15);
+}
+
+.card-icon {
+    font-size: 3rem;
+}
+
+.admin-card h4 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: #222;
+}
+
+.admin-card p {
+    font-size: 1.4rem;
+    color: #888;
+}
+
+/* ================================= */
+/* RESPONSIVIDADE                    */
+/* ================================= */
+
+@media (max-width: 768px) {
+
+    .sidebar {
+        width: 100%;
+        min-height: auto;
+        position: relative;
+    }
+
+    .admin-content {
+        margin-left: 0;
+        padding: 2rem;
+    }
+
+    .painel-admin {
+        flex-direction: column;
+    }
+}

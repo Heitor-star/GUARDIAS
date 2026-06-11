@@ -1,0 +1,351 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #5b289e;
+    background-color: #dedae7;
+    background: linear-gradient(135deg, #dedae7, #dedae7);
+    
+  }
+
+  /* ============================
+   SEÇÃO AGENDA — LAYOUT GERAL
+=============================== */
+.agenda {
+  width: 100%;
+  min-height: 100vh;
+  padding: 40px 0;
+  margin-top: 80px;
+
+  background-color: #dedae7;
+  color: #5b289e;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.agenda h1 {
+  text-align: center;
+  font-size: 34px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.agenda hr {
+  width: 80%;
+  height: 2px;
+  background-color: #5b289e;
+  border: none;
+  margin: 10px auto 40px auto;
+}
+/* ============================
+ CONTAINER (CALENDÁRIO + EVENTOS)
+=============================== */
+.agenda-container {
+  display: flex;
+  justify-content: center;  /* Centraliza tudo */
+  align-items: flex-start;
+  gap: 120px; /* Espaço equilibrado */
+  max-width: 1200px;
+  margin: 0 auto; /* Centraliza no meio da página */
+  padding: 20px 0;
+}
+
+
+/* ============================
+ CALENDÁRIO
+=============================== */
+.calendar {
+  width: 380px;
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+}
+
+
+.calendar h2 {
+  text-align: center;
+  margin-bottom: 12px;
+  color: #5b289e;
+}
+
+
+/* Semanas */
+.weekdays, .days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  text-align: center;
+  grid-gap: 10px;
+}
+
+.weekdays div {
+  font-weight: bold;
+  padding: 10px 0;
+  background: #dedae7;
+  border-radius: 6px;
+}
+
+
+/* Dias */
+.days div {
+  padding: 12px 0;
+  border-radius: 6px;
+  border: 1px solid #eee;
+  transition: 0.2s;
+}
+
+/* Dia normal */
+.days div:hover {
+  background: #dedae7;
+  cursor: pointer;
+  transform: scale(1.05);
+}
+
+/* Dias vazios */
+.empty {
+  background: #f0f0f0;
+}
+
+
+/* ============================
+ Destaque para dias com eventos
+=============================== */
+/* Adicione a classe "evento" no dia do evento */
+.days .evento {
+  background: #5b289e;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+}
+
+.days .evento:hover {
+  background: #5b289e;
+}
+
+
+/* ============================
+ LADO DIREITO — INFO DO EVENTO
+=============================== */
+.evento-info {
+  background: white;
+  padding: 25px;
+  height: 425px;
+  width: 450px;
+  border-radius: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  animation: aparecer 0.4s ease;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.evento-info h2 {
+  margin-bottom: 15px;
+  color: #5b289e;
+}
+
+.evento-info p {
+  margin-bottom: 12px;
+  font-size: 16px;
+}
+
+.evento-info input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #aaa;
+  margin-top: 10px;
+  outline: none;
+  transition: .2s;
+}
+
+.evento-info input:focus {
+  border-color: #5a7d3c;
+  box-shadow: 0 0 5px #a5c58a;
+}
+
+.btn-enviar {
+  margin-top: 15px;
+  width: 100%;
+  padding: 12px;
+  background: #5b289e;
+  color: white;
+  border: none;
+  font-size: 17px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: .2s;
+}
+
+.btn-enviar:hover {
+  background: #8f73b2;
+}
+
+
+/* ============================
+ RESPONSIVIDADE
+=============================== */
+@media (max-width: 900px) {
+  .agenda-container {
+      flex-direction: column;
+      gap: 40px;
+      align-items: center;
+  }
+
+  .calendar {
+      width: 90%;
+      max-width: 400px;
+  }
+
+  .evento-info {
+      width: 90%;
+      max-width: 400px;
+  }
+}
+
+
+  /* ============================
+   SEÇÃO GALERIA — LAYOUT GERAL
+=============================== */
+.galeria {
+  background-color: #dedae7;
+  background-size: cover;
+  background-position: center center;
+  background-attachment: fixed;
+  width: 100%;
+  padding: 40px 0;
+  color: #42451e;
+}
+
+/* Título e datas */
+.galeria h1 {
+  color: #5b289e;
+  text-align: center;
+  font-size: 36px;
+  margin-bottom: 5px;
+}
+
+.galeria h2 {
+  color: #5b289e;
+  width: 90%;
+  margin: 40px auto 10px;
+  font-size: 24px;
+}
+
+/* Linha */
+.galeria hr {
+  width: 90%;
+  margin: 0 auto 40px;
+  border: 1px solid #5b289e;
+}
+
+/* Grid da galeria */
+.listgaleria {
+  width: 90%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  position: relative;
+}
+
+/* Botão "ver todas as imagens" */
+.listgaleria a {
+  position: absolute;
+  top: -35px;
+  right: 0;
+  text-decoration: none;
+  color: #8f73b2;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.listgaleria img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.25);
+  transition: .3s;
+}
+
+.listgaleria img:hover {
+  transform: scale(1.05);
+}
+  /* ============================
+   SEÇÃO PROGETOS — LAYOUT GERAL
+=============================== */
+
+.projetos {
+  background-color: #dedae7;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 15px;
+  
+}
+
+.projetos hr {
+  width: 80%;
+  height: 2px;
+  background-color: #5b289e;
+  border: none;
+  margin: 10px auto 30px auto;
+}
+
+.listprojetos{
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(3,2fr);
+  border-radius: 500px;
+  gap: 50px;
+  transition: transform 0.3s;
+}
+
+.listprojetos img {
+  width: 500px;
+  border-radius: 20px;
+  padding: 10px;
+  transition: transform 0.3s ease;
+}
+
+.listprojetos a:hover img {
+  transform: scale(1.06);
+  
+}
+
+.listprojetos img{
+  width: 400px;
+  height: 100%;
+  border-radius: 50px;
+}
+
+.listprojetos figure{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.listprojetos figcaption{
+  font-size: 18px;
+}
+
+.listgaleria {
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(5,2fr);
+  border-radius: 500;
+}
+
+
